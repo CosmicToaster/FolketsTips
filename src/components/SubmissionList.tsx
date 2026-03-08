@@ -13,9 +13,10 @@ interface Submission {
 
 interface SubmissionListProps {
   submissions: Submission[];
+  matchNames?: string[];
 }
 
-export function SubmissionList({ submissions }: SubmissionListProps) {
+export function SubmissionList({ submissions, matchNames }: SubmissionListProps) {
   if (submissions.length === 0) {
     return (
       <div className="text-center py-8 text-gray-500">
@@ -52,7 +53,7 @@ export function SubmissionList({ submissions }: SubmissionListProps) {
                   <div
                     key={i}
                     className="flex-1 text-center bg-gray-100 rounded py-1 font-mono"
-                    title={`Match ${i + 1}`}
+                    title={matchNames?.[i] ?? `Match ${i + 1}`}
                   >
                     {picks.join("")}
                   </div>

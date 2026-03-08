@@ -11,6 +11,7 @@ export const gridDataSchema = z.array(matchPickSchema).length(13);
 
 export const createRoomSchema = z.object({
   signBudget: z.number().int().min(13).max(39),
+  matchNames: z.array(z.string().max(100)).length(13),
 });
 
 export const submitTipsSchema = z.object({

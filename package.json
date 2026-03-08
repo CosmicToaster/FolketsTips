@@ -13,6 +13,7 @@
     "@auth/prisma-adapter": "^2.11.1",
     "@prisma/adapter-pg": "^7.4.2",
     "@prisma/client": "^7.4.2",
+    "gif.js": "^0.2.0",
     "html-to-image": "^1.11.13",
     "nanoid": "^5.1.6",
     "next": "16.1.6",

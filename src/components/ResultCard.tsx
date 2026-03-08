@@ -7,10 +7,11 @@ import { OPTIONS } from "@/lib/types";
 interface ResultCardProps {
   finalGrid: Option[];
   voteSummary: VoteCount[];
+  matchNames?: string[];
 }
 
 export const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
-  function ResultCard({ finalGrid, voteSummary }, ref) {
+  function ResultCard({ finalGrid, voteSummary, matchNames }, ref) {
     return (
       <div
         ref={ref}
@@ -25,11 +26,11 @@ export const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
         </div>
 
         <div className="rounded-lg overflow-hidden border border-gray-200">
-          <div className="grid grid-cols-[auto_1fr_1fr_1fr] bg-[#006AA7] text-white text-center text-sm font-semibold">
-            <div className="px-3 py-2 w-14">#</div>
-            <div className="py-2">1</div>
-            <div className="py-2">X</div>
-            <div className="py-2">2</div>
+          <div className="grid grid-cols-[minmax(60px,1fr)_repeat(3,auto)] bg-[#006AA7] text-white text-center text-sm font-semibold">
+            <div className="px-3 py-2 text-left">Match</div>
+            <div className="py-2 px-2">1</div>
+            <div className="py-2 px-2">X</div>
+            <div className="py-2 px-2">2</div>
           </div>
           {finalGrid.map((pick, i) => {
             const votes = voteSummary[i];
@@ -37,19 +38,22 @@ export const ResultCard = forwardRef<HTMLDivElement, ResultCardProps>(
             return (
               <div
                 key={i}
-                className={`grid grid-cols-[auto_1fr_1fr_1fr] items-center ${
+                className={`grid grid-cols-[minmax(60px,1fr)_repeat(3,auto)] items-center ${
                   i % 2 === 0 ? "bg-gray-50" : "bg-white"
                 }`}
               >
-                <div className="px-3 py-2 text-sm font-medium text-gray-600 w-14 text-center">
-                  {i + 1}
+                <div
+                  className="px-3 py-2 text-sm font-medium text-gray-600 truncate"
+                  title={matchNames?.[i] ?? `Match ${i + 1}`}
+                >
+                  {matchNames?.[i] || i + 1}
                 </div>
                 {OPTIONS.map((opt) => {
                   const isSelected = pick === opt;
                   const pct =
                     total > 0 ? Math.round((votes[opt] / total) * 100) : 0;
                   return (
-                    <div key={opt} className="flex justify-center py-1.5">
+                    <div key={opt} className="flex justify-center py-1.5 px-1">
                       <div
                         className={`w-12 h-12 rounded-lg flex flex-col items-center justify-center text-xs ${
                           isSelected

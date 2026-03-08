@@ -19,9 +19,14 @@ export async function GET(
     return NextResponse.json({ error: "Room not found" }, { status: 404 });
   }
 
+  const matchNames =
+    (room.matchData as string[] | null) ??
+    Array.from({ length: 13 }, (_, i) => `Match ${i + 1}`);
+
   return NextResponse.json({
     status: room.status,
     signBudget: room.signBudget,
+    matchNames,
     submissions: room.submissions,
     hasResult: !!room.result,
   });

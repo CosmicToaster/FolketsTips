@@ -43,7 +43,14 @@ export default async function RoomPage({
           Teckenbudget: {room.signBudget} tecken
         </p>
       </div>
-      <SubmissionForm roomCode={code} signBudget={room.signBudget} />
+      <SubmissionForm
+        roomCode={code}
+        signBudget={room.signBudget}
+        matchNames={
+          (room.matchData as string[] | null) ??
+          Array.from({ length: 13 }, (_, i) => `Match ${i + 1}`)
+        }
+      />
     </div>
   );
 }

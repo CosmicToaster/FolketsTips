@@ -7,6 +7,7 @@ import { calculateSignCount, validateGrid } from "@/lib/validations";
 
 interface TipsGridProps {
   signBudget: number;
+  matchNames?: string[];
   onSubmit: (playerName: string, gridData: GridData) => Promise<void>;
 }
 
@@ -18,7 +19,7 @@ function createEmptyGrid(): GridData {
   }));
 }
 
-export function TipsGrid({ signBudget, onSubmit }: TipsGridProps) {
+export function TipsGrid({ signBudget, matchNames, onSubmit }: TipsGridProps) {
   const [playerName, setPlayerName] = useState("");
   const [grid, setGrid] = useState<GridData>(createEmptyGrid);
   const [submitting, setSubmitting] = useState(false);
@@ -96,24 +97,27 @@ export function TipsGrid({ signBudget, onSubmit }: TipsGridProps) {
       </div>
 
       <div className="bg-white rounded-xl shadow-md overflow-hidden">
-        <div className="grid grid-cols-[auto_1fr_1fr_1fr] bg-[#006AA7] text-white text-center text-sm font-semibold">
-          <div className="px-3 py-2">Match</div>
-          <div className="py-2">1</div>
-          <div className="py-2">X</div>
-          <div className="py-2">2</div>
+        <div className="grid grid-cols-[minmax(80px,1fr)_repeat(3,auto)] bg-[#006AA7] text-white text-center text-sm font-semibold">
+          <div className="px-3 py-2 text-left">Match</div>
+          <div className="py-2 px-2">1</div>
+          <div className="py-2 px-2">X</div>
+          <div className="py-2 px-2">2</div>
         </div>
         {grid.map((match, i) => (
           <div
             key={i}
-            className={`grid grid-cols-[auto_1fr_1fr_1fr] items-center ${
+            className={`grid grid-cols-[minmax(80px,1fr)_repeat(3,auto)] items-center ${
               i % 2 === 0 ? "bg-gray-50" : "bg-white"
             }`}
           >
-            <div className="px-3 py-1 text-sm font-medium text-gray-600 w-16 text-center">
-              {i + 1}
+            <div
+              className="px-3 py-1 text-sm font-medium text-gray-600 truncate"
+              title={matchNames?.[i] ?? `Match ${i + 1}`}
+            >
+              {matchNames?.[i] || `Match ${i + 1}`}
             </div>
             {OPTIONS.map((opt) => (
-              <div key={opt} className="flex justify-center py-1">
+              <div key={opt} className="flex justify-center py-1 px-1">
                 <button
                   type="button"
                   onClick={() => togglePick(i, opt)}

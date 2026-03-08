@@ -8,9 +8,10 @@ import type { Option, VoteCount } from "@/lib/types";
 interface ResultViewProps {
   finalGrid: Option[];
   voteSummary: VoteCount[];
+  matchNames?: string[];
 }
 
-export function ResultView({ finalGrid, voteSummary }: ResultViewProps) {
+export function ResultView({ finalGrid, voteSummary, matchNames }: ResultViewProps) {
   const cardRef = useRef<HTMLDivElement>(null);
 
   return (
@@ -19,6 +20,7 @@ export function ResultView({ finalGrid, voteSummary }: ResultViewProps) {
         ref={cardRef}
         finalGrid={finalGrid}
         voteSummary={voteSummary}
+        matchNames={matchNames}
       />
       <ExportButton targetRef={cardRef} />
       <a

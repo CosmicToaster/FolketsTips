@@ -17,11 +17,16 @@ export default async function ResultPage({
 
   if (!room || !room.result) notFound();
 
+  const matchNames =
+    (room.matchData as string[] | null) ??
+    Array.from({ length: 13 }, (_, i) => `Match ${i + 1}`);
+
   return (
     <div className="max-w-md mx-auto px-4 py-8">
       <ResultView
         finalGrid={room.result.finalGrid as Option[]}
         voteSummary={room.result.voteSummary as VoteCount[]}
+        matchNames={matchNames}
       />
     </div>
   );

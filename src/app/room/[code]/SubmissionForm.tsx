@@ -7,12 +7,23 @@ import type { GridData } from "@/lib/types";
 interface SubmissionFormProps {
   roomCode: string;
   signBudget: number;
+  matchNames: string[];
 }
 
-export function SubmissionForm({ roomCode, signBudget }: SubmissionFormProps) {
+export function SubmissionForm({
+  roomCode,
+  signBudget,
+  matchNames,
+}: SubmissionFormProps) {
   async function handleSubmit(playerName: string, gridData: GridData) {
     await submitTips({ roomCode, playerName, gridData });
   }
 
-  return <TipsGrid signBudget={signBudget} onSubmit={handleSubmit} />;
+  return (
+    <TipsGrid
+      signBudget={signBudget}
+      matchNames={matchNames}
+      onSubmit={handleSubmit}
+    />
+  );
 }
